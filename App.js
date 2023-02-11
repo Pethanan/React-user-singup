@@ -1,28 +1,26 @@
-import React, {useState} from 'react';
-import UserInputForm from "./UserInputForm";
-import AddedUserDetail from "./AddedUserDetail"
+import React, { useState } from 'react';
 
+import AddUser from './Components/Users/AddUser';
+import UsersList from './Components/Users/UsersList';
 
-export default function App(props) 
-{
+function App() {
+  const [usersList, setUsersList] = useState([]);
 
-    const [usersData, setusersData] = useState([]);
-    
-    const getDataHandler = (data) => {
-      setusersData(()=>[...usersData, data]);
-      console.log(data);
-
+  const addUserHandler = (uName, uAge) => {
+    setUsersList((prevUsersList) => {
+      return [
+        ...prevUsersList,
+        { name: uName, age: uAge, id: Math.random().toString() },
+      ];
+    });
   };
 
-
   return (
-    <div className='App'>
-    <UserInputForm onGetData={getDataHandler}> </UserInputForm>
-    <AddedUserDetail usersList={usersData}>{}</AddedUserDetail>
-      
-      
+    <div>
+      <AddUser onAddUser={addUserHandler} />
+      <UsersList users={usersList} />
     </div>
   );
 }
 
-// Log to console
+export default App;
